@@ -4,6 +4,7 @@ const nextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  transpilePackages: ["react-fast-marquee"],
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,

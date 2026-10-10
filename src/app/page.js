@@ -1,5 +1,11 @@
-import Image from "next/image";
+import Banner from "./components/Banner";
+import ProductMarquee from "./components/Marquee/ProductMarquee";
 
 export default function Home() {
-  return <div>বাজার দর</div>;
+  return (
+    <div>
+      <ProductMarquee />
+      <Banner />
+    </div>
+  );
 }
