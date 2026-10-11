@@ -44,7 +44,16 @@ const ProductCard = ({ product }) => {
         <p className="mt-0.5 text-sm font-bold text-gray-900">
           {formatPrice(today)} টাকা
           <span className="ml-1 text-xs font-normal text-gray-500">
-            /{unit === "kg" ? "কেজি" : unit}
+            /
+            {unit === "kg"
+              ? "কেজি"
+              : unit === "litre"
+                ? "লিটার"
+                : unit === "dozen"
+                  ? "ডজন"
+                  : unit === "piece"
+                    ? "পিস"
+                    : unit}
           </span>
         </p>
       </div>

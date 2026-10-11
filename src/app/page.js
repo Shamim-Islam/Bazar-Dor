@@ -1,11 +1,11 @@
 import Banner from "./components/home/Banner";
-import AllProducts from "./components/home/AllProducts";
+import HomeProducts from "./components/home/HomeProducts";
 
 export default function Home() {
   return (
     <div>
       <Banner />
-      <AllProducts />
+      <HomeProducts />
     </div>
   );
 }
