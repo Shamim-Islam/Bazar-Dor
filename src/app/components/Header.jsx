@@ -1,8 +1,6 @@
-"use client";
 import { Button } from "@heroui/react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import Navlinks from "./Navlinks";
 
 const Header = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -49,7 +47,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <Navlinks />
     </header>
   );
 };
