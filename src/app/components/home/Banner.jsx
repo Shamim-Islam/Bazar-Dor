@@ -16,7 +16,7 @@ const Banner = () => {
               {date}
             </div>
 
-            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-4">
               আজকের বাজারের দাম এক নজরে
             </h1>
 
@@ -25,8 +25,13 @@ const Banner = () => {
               বিস্তারিত, গড়, সর্বনিম্ন-সর্বোচ্চ এবং দামের পরিবর্তন এক জায়গায়।
             </p>
 
-            <button className="bg-[#008a3e] hover:bg-[#007a36] transition-colors text-white font-medium py-2.5 px-6 rounded-lg text-sm md:text-base shadow-lg shadow-[#008a3e]/30 hover:shadow-[#007a36]/40">
-              সব পণ্য দেখুন
+            <button className="mt-5">
+              <a
+                href="#সব-পণ্য"
+                className="bg-[#008a3e] hover:bg-[#007a36] transition-colors text-white font-medium py-2.5 px-6 rounded-lg text-sm md:text-base shadow-lg shadow-[#008a3e]/30 hover:shadow-[#007a36]/40"
+              >
+                সব পণ্য দেখুন
+              </a>
             </button>
           </div>
 

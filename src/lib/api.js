@@ -18,7 +18,21 @@ export const getCategories = async () => {
   return fetchAPI("/categories");
 };
 
-export const getProducts = async () => {
-  return fetchAPI("/products");
+export const getProducts = async (category) => {
+  const endpoint = category
+    ? `/products?category=${category}`
+    : "/products";
+  return fetchAPI(endpoint);
 };
 
+export const getProductBySlug = async (slug) => {
+  const products = await fetchAPI("/products");
+  const product = products.find((p) => p.slug === slug);
+  return product || null;
+};
+
+export const getProductById = async (id) => {
+  const products = await fetchAPI("/products");
+  const product = products.find((p) => p.id === Number(id));
+  return product || null;
+};

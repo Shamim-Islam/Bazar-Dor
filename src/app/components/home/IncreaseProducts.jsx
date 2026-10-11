@@ -6,8 +6,8 @@ const IncreaseProducts = ({ products = [] }) => {
   );
 
   return (
-    <section className="mb-6 sm:mb-7 p-4 md:p-8 lg:p-0">
-      <h2 className="mb-4 flex items-center gap-2 text-xl lg:text-2xl font-bold text-gray-800 ">
+    <section className="mb-6 sm:mb-7 lg:mb-12 p-4 md:p-8 lg:p-0">
+      <h2 className="mb-4 flex items-center gap-2 text-[18px] lg:text-[22px] font-bold text-gray-800 ">
         <span className="text-red-600">▲</span>
         আজ দাম বেড়েছে
       </h2>

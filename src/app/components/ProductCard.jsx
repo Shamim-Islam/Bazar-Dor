@@ -1,6 +1,16 @@
+import Link from "next/link";
+
 const ProductCard = ({ product }) => {
-  const { nameBn, categoryNameBn, categoryIcon, image, today, unit, change } =
-    product;
+  const {
+    nameBn,
+    categoryNameBn,
+    categoryIcon,
+    image,
+    today,
+    unit,
+    change,
+    slug,
+  } = product;
 
   const isUp = change?.dir === "up";
   const isDown = change?.dir === "down";
@@ -8,14 +18,17 @@ const ProductCard = ({ product }) => {
   const formatPrice = (price) => new Intl.NumberFormat("bn-BD").format(price);
 
   return (
-    <article className="min-w-0 rounded-xl border border-[#e3eae4] bg-[#fbfdfb] p-3 transition hover:border-green-300 hover:shadow-sm">
+    <Link
+      href={`/products/${slug}`}
+      className="block min-w-0 rounded-xl border border-[#e3eae4] bg-[#fbfdfb] p-3 transition hover:border-green-300 hover:shadow-sm"
+    >
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f0f5f0] text-xl">
           {image || categoryIcon || "🛒"}
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-sm font-bold text-gray-800">{nameBn}</h3>
+          <h3 className="truncate text-md font-bold text-gray-800">{nameBn}</h3>
 
           <p className="mt-0.5 text-xs text-gray-500">
             {categoryNameBn || "পণ্য"}
@@ -24,7 +37,7 @@ const ProductCard = ({ product }) => {
 
         {change && (
           <span
-            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold ${
+            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[12px] font-semibold ${
               isUp
                 ? "bg-red-50 text-red-600"
                 : isDown
@@ -57,7 +70,7 @@ const ProductCard = ({ product }) => {
           </span>
         </p>
       </div>
-    </article>
+    </Link>
   );
 };
 

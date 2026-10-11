@@ -40,9 +40,7 @@ const Navlinks = () => {
             </div>
           ) : (
             categories.map((category) => {
-              const href = category.slug?.startsWith("/")
-                ? category.slug
-                : `/${category.slug}`;
+              const href = `/products/category=${category.slug}`;
 
               const isActive =
                 pathname === href || pathname.startsWith(`${href}/`);
