@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@heroui/react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";

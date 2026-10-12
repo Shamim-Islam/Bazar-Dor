@@ -39,17 +39,17 @@ const Navlinks = () => {
               <span>ক্যাটাগরি লোড হচ্ছে...</span>
             </div>
           ) : (
-            categories.map((category) => {
-              const href = `/products/category=${category.slug}`;
+          categories.map((category) => {
+            const href = `/category/${category.slug}`;
 
-              const isActive =
-                pathname === href || pathname.startsWith(`${href}/`);
+            const isActive =
+              pathname === href || pathname.startsWith(`${href}/`);
 
-              return (
-                <Link
-                  key={category.id}
-                  href={href}
-                  aria-current={isActive ? "page" : undefined}
+            return (
+              <Link
+                key={category.id}
+                href={href}
+                aria-current={isActive ? "page" : undefined}
                   className={`flex shrink-0 items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-semibold transition-colors duration-200 sm:px-4 ${
                     isActive
                       ? "bg-[#05893E] text-white shadow-sm"
