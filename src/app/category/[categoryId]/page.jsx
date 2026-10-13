@@ -27,7 +27,7 @@ export default async function ProductsPage({ params }) {
       <div className="mx-auto max-w-7xl px-4 lg:px-0 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-gray-500">
-          <span>হোম</span> / <span>{category.nameBn}</span> /{" "}
+          <span>হোম</span> /{" "}
           <span className="text-gray-700">{category.nameBn}</span>
         </nav>
 

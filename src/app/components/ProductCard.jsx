@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const ProductCard = ({ product }) => {
   const {
+    id,
     nameBn,
     categoryNameBn,
     categoryIcon,
@@ -19,7 +20,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link
-      href={`/products/${slug}`}
+      href={`/products/${id}`}
       className="block min-w-0 rounded-xl border border-[#e3eae4] bg-[#fbfdfb] p-4 transition hover:border-green-300 hover:shadow-sm"
     >
       <div className="flex items-start gap-3">
