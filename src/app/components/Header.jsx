@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Button } from "@heroui/react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -40,7 +40,7 @@ const Header = () => {
 
           {/* Auth Buttons */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
-            <Link href="/signIn">
+            <Link href="/signin">
               <Button
                 variant="light"
                 className="min-w-0 rounded-lg bg-transparent px-2.5 text-xs font-semibold text-[#26332b] transition hover:bg-[#d5d5d5] sm:px-5 sm:text-sm"
@@ -49,7 +49,7 @@ const Header = () => {
               </Button>
             </Link>
 
-            <Link href="/signUp">
+            <Link href="/signup">
               <Button className="min-w-0 rounded-lg bg-[#05893E] px-2.5 text-xs font-semibold text-white shadow-md transition hover:bg-[#047532] sm:px-5 sm:text-sm">
                 সাইন আপ
               </Button>
