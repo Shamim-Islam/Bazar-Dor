@@ -1,11 +1,35 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const SignUpPage = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // TODO: এখানে তোমার signup authentication logic বসাবে
+    const formData = new FormData(e.target);
+    const user = Object.fromEntries(formData.entries());
+    const name = user.name;
+    const email = user.email;
+    const password = user.password;
+    const confirmPassword = user.confirmPassword;
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    const { data, error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      callbackURL: "/",
+    });
+
+    if (data) {
+      toast.success("Account created successfully");
+    }
+    if (error) {
+      toast.error("Failed to create account");
+    }
   };
   return (
     <main className="min-h-[690px] bg-[#eff5ef] px-4 py-10">

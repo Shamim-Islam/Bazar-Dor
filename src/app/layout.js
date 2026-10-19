@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Navlinks from "./components/Navlinks";
 import Marquee from "./components/Marquee";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HindSiliguri = Hind_Siliguri({
   subsets: ["latin", "bengali"],
@@ -23,6 +25,7 @@ export default function RootLayout({ children }) {
       className={`${HindSiliguri.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ToastContainer position="top-right" autoClose={3000} />
         <Header />
         <Navlinks />
         <Marquee />
