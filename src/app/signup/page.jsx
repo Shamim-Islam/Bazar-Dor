@@ -1,6 +1,7 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
 const SignUpPage = () => {
@@ -9,6 +10,7 @@ const SignUpPage = () => {
 
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
+    console.log(user);
     const name = user.name;
     const email = user.email;
     const password = user.password;
@@ -18,14 +20,13 @@ const SignUpPage = () => {
       return;
     }
     const { data, error } = await authClient.signUp.email({
-      name,
-      email,
-      password,
+      ...user,
       callbackURL: "/",
     });
-
+    console.log(data, error);
     if (data) {
       toast.success("Account created successfully");
+      redirect("/");
     }
     if (error) {
       toast.error("Failed to create account");

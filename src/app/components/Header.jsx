@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@heroui/react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import UserInfo from "./UserInfo";
 
 const Header = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -39,22 +39,7 @@ const Header = () => {
           </Link>
 
           {/* Auth Buttons */}
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
-            <Link href="/signin">
-              <Button
-                variant="light"
-                className="min-w-0 rounded-lg bg-transparent px-2.5 text-xs font-semibold text-[#26332b] transition hover:bg-[#d5d5d5] sm:px-5 sm:text-sm"
-              >
-                সাইন ইন
-              </Button>
-            </Link>
-
-            <Link href="/signup">
-              <Button className="min-w-0 rounded-lg bg-[#05893E] px-2.5 text-xs font-semibold text-white shadow-md transition hover:bg-[#047532] sm:px-5 sm:text-sm">
-                সাইন আপ
-              </Button>
-            </Link>
-          </div>
+          <UserInfo/>
         </div>
       </div>
     </header>
