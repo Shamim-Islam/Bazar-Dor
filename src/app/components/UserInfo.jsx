@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -28,7 +29,7 @@ const UserInfo = () => {
   };
 
   if (isPending) {
-    return <div className="h-9 w-24 animate-pulse rounded-lg bg-gray-200" />;
+    return <div className="h-10 w-28 animate-pulse rounded-lg bg-gray-200" />;
   }
 
   return (
@@ -40,29 +41,33 @@ const UserInfo = () => {
             type="button"
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
-            className="flex items-center gap-2 rounded-lg px-2 py-1.5 transition hover:bg-[#e4ece4]"
+            className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 transition ]"
           >
-            <div className="h-7 w-7 overflow-hidden rounded-full border border-[#e0e8e0] bg-white">
-              {user.image ? (
-                <img
-                  src={user.image}
-                  alt={user.name || "User avatar"}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-[#07883e] text-xs font-semibold text-white">
-                  {user.name?.charAt(0)?.toUpperCase() || "U"}
-                </div>
-              )}
+            <div className="avatar">
+              <div className="mask mask-squircle w-9">
+                {user.image ? (
+                  <Image
+                    src={user.image}
+                    alt={user.name || "User avatar"}
+                    width={36}
+                    height={36}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-[#07883e] text-base font-semibold text-white">
+                    {user.name?.charAt(0)?.toUpperCase() || "U"}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <span className="max-w-20 truncate text-xs font-medium text-[#26332b]">
+            <span className="max-w-28 truncate text-sm font-semibold text-[#26332b]">
               {user.name || "ব্যবহারকারী"}
             </span>
 
             <ChevronDown
-              size={13}
-              className={`text-gray-500 transition-transform ${
+              size={16}
+              className={`shrink-0 text-gray-500 transition-transform ${
                 isOpen ? "rotate-180" : ""
               }`}
             />
@@ -80,53 +85,74 @@ const UserInfo = () => {
 
           {/* Dropdown menu */}
           {isOpen && (
-            <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[#e1e9e1] bg-white p-2 shadow-lg">
-              <div className="border-b border-[#edf1ed] px-2 py-2.5">
-                <p className="truncate text-xs font-semibold text-[#26332b]">
-                  {user.name}
-                </p>
+            <div className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-[#e1e9e1] bg-white p-2.5 shadow-lg sm:w-72">
+              {/* User information */}
+              <div className="flex items-center gap-3 border-b border-[#edf1ed] px-2.5 py-3">
+                <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border border-[#e0e8e0] bg-white">
+                  {user.image ? (
+                    <Image
+                      src={user.image}
+                      alt={user.name || "User avatar"}
+                      width={44}
+                      height={44}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-[#07883e] text-lg font-semibold text-white">
+                      {user.name?.charAt(0)?.toUpperCase() || "U"}
+                    </div>
+                  )}
+                </div>
 
-                <p className="mt-1 truncate text-[10px] text-gray-500">
-                  {user.email}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-[#26332b]">
+                    {user.name || "ব্যবহারকারী"}
+                  </p>
+
+                  <p className="mt-1 truncate text-xs text-gray-500">
+                    {user.email}
+                  </p>
+                </div>
               </div>
 
+              {/* Profile */}
               <button
                 type="button"
                 onClick={() => {
                   setIsOpen(false);
                   router.push("/profile");
                 }}
-                className="mt-1 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-xs text-[#26332b] transition hover:bg-[#eff5ef]"
+                className="mt-2 flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-[#26332b] transition hover:bg-[#eff5ef]"
               >
-                <UserRound size={14} />
+                <UserRound size={18} />
                 প্রোফাইল দেখুন
               </button>
 
+              {/* Sign out */}
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-xs text-red-600 transition hover:bg-red-50"
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-600 transition hover:bg-red-50"
               >
-                <LogOut size={14} />
+                <LogOut size={18} />
                 সাইন আউট
               </button>
             </div>
           )}
         </>
       ) : (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           <Link href="/signin">
             <Button
               variant="light"
-              className="min-w-0 rounded-lg bg-transparent px-2.5 text-xs font-semibold text-[#26332b] transition hover:bg-[#d5d5d5] sm:px-5 sm:text-sm"
+              className="min-w-0 rounded-lg bg-transparent px-3 text-sm font-semibold text-[#26332b] transition hover:bg-[#d5d5d5] sm:px-5"
             >
               সাইন ইন
             </Button>
           </Link>
 
           <Link href="/signup">
-            <Button className="min-w-0 rounded-lg bg-[#05893E] px-2.5 text-xs font-semibold text-white shadow-md transition hover:bg-[#047532] sm:px-5 sm:text-sm">
+            <Button className="min-w-0 rounded-lg bg-[#05893E] px-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#047532] sm:px-5">
               সাইন আপ
             </Button>
           </Link>
