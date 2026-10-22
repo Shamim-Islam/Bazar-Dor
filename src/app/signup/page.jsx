@@ -3,8 +3,15 @@ import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignUpPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,11 +32,11 @@ const SignUpPage = () => {
     });
     console.log(data, error);
     if (data) {
-      toast.success("Account created successfully");
+      toast.success("রেজিস্ট্রেশন সফল!" || "Account created successfully");
       redirect("/");
     }
     if (error) {
-      toast.error("Failed to create account");
+      toast.error(error.message || "রেজিস্ট্রেশন ব্যর্থ!");
     }
   };
   return (
@@ -62,7 +69,6 @@ const SignUpPage = () => {
                 className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 text-sm outline-none transition focus:border-[#07883e]"
               />
             </div>
-
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm">
                 ইমেইল
@@ -78,41 +84,76 @@ const SignUpPage = () => {
                 className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 text-sm outline-none transition focus:border-[#07883e]"
               />
             </div>
-
+           
+            {/* Password */}
             <div>
               <label htmlFor="password" className="mb-1.5 block text-sm">
                 পাসওয়ার্ড
               </label>
 
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="কমপক্ষে ৮ অক্ষর"
-                autoComplete="new-password"
-                minLength={8}
-                required
-                className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 text-sm outline-none transition focus:border-[#07883e]"
-              />
-            </div>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="কমপক্ষে ৮ অক্ষর"
+                  autoComplete="new-password"
+                  minLength={8}
+                  required
+                  className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 pr-10 text-sm outline-none transition focus:border-[#07883e]"
+                />
 
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={
+                    showPassword ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখুন"
+                  }
+                  aria-pressed={showPassword}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500 transition hover:text-[#07883e]"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+            {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="mb-1.5 block text-sm">
                 পাসওয়ার্ড নিশ্চিত করুন
               </label>
 
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                placeholder="আবার লিখুন"
-                autoComplete="new-password"
-                minLength={8}
-                required
-                className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 text-sm outline-none transition focus:border-[#07883e]"
-              />
-            </div>
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="আবার লিখুন"
+                  autoComplete="new-password"
+                  minLength={8}
+                  required
+                  className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 pr-10 text-sm outline-none transition focus:border-[#07883e]"
+                />
 
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label={
+                    showConfirmPassword
+                      ? "নিশ্চিত পাসওয়ার্ড লুকান"
+                      : "নিশ্চিত পাসওয়ার্ড দেখুন"
+                  }
+                  aria-pressed={showConfirmPassword}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500 transition hover:text-[#07883e]"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
+            </div>
+          
             <button
               type="submit"
               className="w-full rounded-lg bg-[#07883e] py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#067532] focus:outline-none focus:ring-2 focus:ring-[#07883e] focus:ring-offset-2"
@@ -133,7 +174,7 @@ const SignUpPage = () => {
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
               // TODO: Add Google sign-up
             >
-              <span className="font-bold text-base text-[#4285f4]">G</span>
+              <FcGoogle className="h-5 w-5 shrink-0" />
               Google দিয়ে চালিয়ে যান
             </button>
 
@@ -142,14 +183,7 @@ const SignUpPage = () => {
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
               // TODO: Add GitHub sign-up
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 .1.77 1.98 3.18 1.51.1-.72.4-1.2.72-1.48-2.5-.29-5.13-1.25-5.13-5.55 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-2.99 0 0 .95-.3 3.08 1.16a10.7 10.7 0 0 1 5.6 0c2.13-1.45 3.08-1.16 3.08-1.16.61 1.55.23 2.7.11 2.99.72.79 1.16 1.8 1.16 3.03 0 4.31-2.63 5.25-5.14 5.54.4.35.76 1.03.76 2.08v3.1c0 .3.2.65.77.54A11.2 11.2 0 0 0 12 .8Z" />
-              </svg>
+              <FaGithub className="h-5 w-5 shrink-0" />
               GitHub দিয়ে চালিয়ে যান
             </button>
           </div>
