@@ -2,11 +2,9 @@
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import UserInfo from "./UserInfo";
+import CurrentDate from "./CurrentDate";
 
 const Header = () => {
-  const date = new Date().toLocaleDateString("bn-BD", {
-    dateStyle: "full",
-  });
 
   return (
     <header className="w-full border-b border-gray-100 bg-[#f9fbf9]">
@@ -33,7 +31,7 @@ const Header = () => {
               </h1>
 
               <p className="mt-1 max-w-[180px] truncate text-[10px] text-[#4b554e] sm:max-w-none sm:text-xs">
-                {date}
+                <CurrentDate />
               </p>
             </div>
           </Link>

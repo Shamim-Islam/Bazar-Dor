@@ -1,28 +1,26 @@
-// "use client";
+"use client";
 
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-// const CurrentDate = () => {
-//   const [date, setDate] = useState("");
+export default function CurrentDate() {
+  const [date, setDate] = useState("");
 
-//   useEffect(() => {
-//     setDate(
-//       new Date().toLocaleDateString("bn-BD", {
-//         dateStyle: "full",
-//       }),
-//     );
-//   }, []);
+  useEffect(() => {
+    const updateDate = () => {
+      const formattedDate = new Intl.DateTimeFormat("bn-BD", {
+        dateStyle: "full",
+        timeZone: "Asia/Dhaka",
+      }).format(new Date());
 
-//   return <>{date}</>;
-// };
+      setDate(formattedDate);
+    };
 
-// export default CurrentDate;
-// "use client";
-// const CurrentDate = () => {
-//   const date = new Date().toLocaleDateString("bn-BD", {
-//     dateStyle: "full",
-//   });
-//   console.log(date);
-// };
+    updateDate();
 
-// export default CurrentDate;
+    const interval = setInterval(updateDate, 60_000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <>{date || "তারিখ লোড হচ্ছে..."}</>;
+}

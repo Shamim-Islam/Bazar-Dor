@@ -1,5 +1,9 @@
 "use client";
-import { authClient, handleGoogleSignIn } from "@/lib/auth-client";
+import {
+  authClient,
+  handleGoogleSignIn,
+  handleGithubSignIn,
+} from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
@@ -84,7 +88,7 @@ const SignUpPage = () => {
                 className="w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 py-2.5 text-sm outline-none transition focus:border-[#07883e]"
               />
             </div>
-           
+
             {/* Password */}
             <div>
               <label htmlFor="password" className="mb-1.5 block text-sm">
@@ -153,7 +157,7 @@ const SignUpPage = () => {
                 </button>
               </div>
             </div>
-          
+
             <button
               type="submit"
               className="w-full rounded-lg bg-[#07883e] py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#067532] focus:outline-none focus:ring-2 focus:ring-[#07883e] focus:ring-offset-2"
@@ -181,7 +185,7 @@ const SignUpPage = () => {
             <button
               type="button"
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
-              // TODO: Add GitHub sign-up
+              onClick={handleGithubSignIn}
             >
               <FaGithub className="h-5 w-5 shrink-0" />
               GitHub দিয়ে চালিয়ে যান

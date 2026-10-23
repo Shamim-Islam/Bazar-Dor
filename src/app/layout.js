@@ -6,6 +6,7 @@ import Navlinks from "./components/Navlinks";
 import Marquee from "./components/Marquee";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
 
 const HindSiliguri = Hind_Siliguri({
   subsets: ["latin", "bengali"],
@@ -28,7 +29,9 @@ export default function RootLayout({ children }) {
         <ToastContainer position="top-right" autoClose={3000} />
         <Header />
         <Navlinks />
-        <Marquee />
+        <Suspense fallback={<div className="h-10" />}>
+          <Marquee />
+        </Suspense>
         {children}
         <Footer />
       </body>

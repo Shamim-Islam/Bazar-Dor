@@ -8,4 +8,10 @@ export const handleGoogleSignIn = async () => {
   });
 };
 
+export const handleGithubSignIn = async () => {
+  const data = await authClient.signIn.social({
+    provider: "github",
+  });
+};
+
 export const { signIn, signUp, signOut, useSession } = createAuthClient();

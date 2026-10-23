@@ -1,11 +1,9 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import CurrentDate from "../CurrentDate";
 
 const Banner = () => {
-  const date = new Date().toLocaleDateString("bn-BD", {
-    dateStyle: "full",
-  });
 
   return (
     <div className="w-full bg-[#e8f5e9] py-8 px-4 md:px-8">
@@ -13,7 +11,7 @@ const Banner = () => {
         <div className="relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10 flex flex-col md:flex-row justify-between items-center overflow-hidden">
           <div className="flex-1 z-10 w-full">
             <div className="inline-block bg-[#e8f5e9] text-[#2e7d32] text-sm font-medium px-3 py-1 rounded-full mb-4">
-              {date}
+              <CurrentDate />
             </div>
 
             <h1 className="text-2xl md:text-5xl font-bold text-gray-900 mb-4">
