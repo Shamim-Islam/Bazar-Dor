@@ -1,5 +1,5 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
+import { authClient, handleGoogleSignIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
@@ -172,7 +172,7 @@ const SignUpPage = () => {
             <button
               type="button"
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
-              // TODO: Add Google sign-up
+              onClick={handleGoogleSignIn}
             >
               <FcGoogle className="h-5 w-5 shrink-0" />
               Google দিয়ে চালিয়ে যান
