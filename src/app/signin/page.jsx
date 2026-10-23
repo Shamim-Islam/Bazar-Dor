@@ -1,15 +1,19 @@
 "use client";
 
-import { authClient, handleGoogleSignIn, handleGithubSignIn } from "@/lib/auth-client";
+import { Suspense, useState } from "react";
+import {
+  authClient,
+  handleGoogleSignIn,
+  handleGithubSignIn,
+} from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-const SignInPage = () => {
+function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -31,15 +35,12 @@ const SignInPage = () => {
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
 
-    const email = user.email;
-    const password = user.password;
-
     try {
       setLoading(true);
 
       const { data, error } = await authClient.signIn.email({
-        email,
-        password,
+        email: user.email,
+        password: user.password,
         callbackURL: callbackUrl,
       });
 
@@ -54,6 +55,7 @@ const SignInPage = () => {
         router.refresh();
       }
     } catch (error) {
+      console.error("Sign in failed:", error);
       toast.error("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     } finally {
       setLoading(false);
@@ -63,7 +65,6 @@ const SignInPage = () => {
   return (
     <main className="min-h-[690px] bg-[#eff5ef] px-4 py-10">
       <div className="mx-auto max-w-md">
-        {/* Page Heading */}
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-[#202b23]">সাইন ইন করুন</h1>
 
@@ -72,10 +73,8 @@ const SignInPage = () => {
           </p>
         </div>
 
-        {/* Sign In Form */}
         <div className="rounded-2xl border border-[#e0e9e0] bg-[#f9fcf9] p-5">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm">
                 ইমেইল
@@ -92,7 +91,6 @@ const SignInPage = () => {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label htmlFor="password" className="mb-1.5 block text-sm">
                 পাসওয়ার্ড
@@ -123,7 +121,6 @@ const SignInPage = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -133,21 +130,17 @@ const SignInPage = () => {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="my-5 flex items-center gap-3">
             <div className="h-px flex-1 bg-[#dfe8df]" />
-
             <span className="text-xs text-gray-500">অথবা</span>
-
             <div className="h-px flex-1 bg-[#dfe8df]" />
           </div>
 
-          {/* Social Login */}
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
+              onClick={() => handleGoogleSignIn()}
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
-              onClick={handleGoogleSignIn}
             >
               <FcGoogle className="h-5 w-5 shrink-0" />
               Google দিয়ে চালিয়ে যান
@@ -155,15 +148,14 @@ const SignInPage = () => {
 
             <button
               type="button"
+              onClick={() => handleGithubSignIn()}
               className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe8df] px-2 py-2.5 text-xs font-semibold transition hover:bg-[#eff5ef] sm:text-sm"
-              onClick={handleGithubSignIn}
             >
               <FaGithub className="h-5 w-5 shrink-0" />
               GitHub দিয়ে চালিয়ে যান
             </button>
           </div>
 
-          {/* Sign Up Link */}
           <p className="mt-4 text-center text-xs text-gray-600">
             অ্যাকাউন্ট নেই?{" "}
             <Link
@@ -175,7 +167,6 @@ const SignInPage = () => {
           </p>
         </div>
 
-        {/* Back to Home */}
         <div className="mt-5 text-center">
           <Link
             href="/"
@@ -187,6 +178,18 @@ const SignInPage = () => {
       </div>
     </main>
   );
-};
+}
 
-export default SignInPage;
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-[690px] items-center justify-center bg-[#eff5ef]">
+          <p className="text-sm text-gray-500">লোড হচ্ছে...</p>
+        </main>
+      }
+    >
+      <SignInForm />
+    </Suspense>
+  );
+}

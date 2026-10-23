@@ -44,7 +44,7 @@ const SignUpPage = () => {
     }
   };
   return (
-    <main className="min-h-[690px] bg-[#eff5ef] px-4 py-10">
+    <main className="min-h-172.5 bg-[#eff5ef] px-4 py-10">
       <div className="mx-auto max-w-md">
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-[#202b23]">

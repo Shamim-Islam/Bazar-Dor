@@ -7,26 +7,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, UserRound, LogOut } from "lucide-react";
+import { useSignOut } from "@/hooks/useSignOut";
 
 const UserInfo = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
+  const handleSignOut = useSignOut();
+
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-
-  const handleSignOut = async () => {
-    const { error } = await authClient.signOut();
-
-    if (error) {
-      console.error("Sign out failed:", error);
-      return;
-    }
-
-    setIsOpen(false);
-    router.push("/signin");
-    router.refresh();
-  };
 
   if (isPending) {
     return <div className="h-10 w-28 animate-pulse rounded-lg bg-gray-200" />;
@@ -134,8 +124,7 @@ const UserInfo = () => {
                 onClick={handleSignOut}
                 className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-600 transition hover:bg-red-50"
               >
-                <LogOut size={18} />
-                সাইন আউট
+                <LogOut size={18} /> সাইন আউট
               </button>
             </div>
           )}
