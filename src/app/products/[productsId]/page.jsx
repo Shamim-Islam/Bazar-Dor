@@ -1,23 +1,33 @@
+import { Suspense, cache } from "react";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { getProductById } from "@/lib/api";
 
+const getCachedProduct = cache(async (id) => {
+  return getProductById(id);
+});
+
 export async function generateMetadata({ params }) {
+  await connection();
+
   const { productsId } = await params;
-  const product = await getProductById(productsId);
+  const product = await getCachedProduct(productsId);
 
   return {
-    title: product ? `${product.nameBn} — আজকের দাম` : "পণ্য পাওয়া যায়নি",
+    title: product
+      ? `${product.nameBn} — আজকের দাম`
+      : "পণ্য পাওয়া যায়নি",
   };
 }
 
-const ProductDetailsPage = async ({ params }) => {
-  const { productsId } = await params;
-  const product = await getProductById(productsId);
-  console.log("productId", product);
+const ProductDetailsContent = async ({ params }) => {
 
-  if (!product) {
-    notFound();
-  }
+  const { productsId } = await params;
+  const product = await getCachedProduct(productsId);
+
+if (!product) {
+  notFound();
+}
 
   const { nameBn, image, today, categoryNameBn, change, unit, markets } =
     product;
@@ -232,4 +242,58 @@ function SummaryCard({ label, value, note, color }) {
   );
 }
 
-export default ProductDetailsPage;
+function ProductDetailsSkeleton() {
+  return (
+    <main className="min-h-screen animate-pulse bg-[#e8f5e9] text-[#202b23]">
+      <div className="mx-auto max-w-7xl px-4 py-6 lg:px-0">
+        <div className="mb-6 h-4 w-64 rounded bg-gray-300" />
+
+        <section className="mb-5 flex flex-col justify-between gap-5 rounded-2xl border border-[#e0e9e0] bg-[#f9fcf9] p-5 sm:flex-row sm:items-center sm:p-6">
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 shrink-0 rounded-2xl bg-gray-200" />
+
+            <div className="space-y-3">
+              <div className="h-6 w-40 rounded bg-gray-200" />
+              <div className="h-3 w-28 rounded bg-gray-200" />
+              <div className="h-3 w-48 rounded bg-gray-200" />
+            </div>
+          </div>
+
+          <div className="h-28 w-36 rounded-2xl bg-gray-200" />
+        </section>
+
+        <section className="rounded-2xl border border-[#e0e9e0] bg-[#f9fcf9] p-4 sm:p-5">
+          <div className="mb-5 h-6 w-44 rounded bg-gray-200" />
+
+          <div className="mb-6 grid gap-3 sm:grid-cols-3">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="h-28 rounded-2xl border border-[#e0e9e0] bg-[#eff5ef]"
+              />
+            ))}
+          </div>
+
+          <div className="mb-4 h-5 w-48 rounded bg-gray-200" />
+
+          <div className="overflow-hidden rounded-2xl border border-[#e0e9e0]">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div
+                key={item}
+                className="h-12 border-b border-[#dce5dc] bg-[#f9fcf9] last:border-0"
+              />
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+export default function ProductDetailsPage({ params }) {
+  return (
+    <Suspense fallback={<ProductDetailsSkeleton />}>
+      <ProductDetailsContent params={params} />
+    </Suspense>
+  );
+}

@@ -1,10 +1,21 @@
+import { cache } from "react";
+import { connection } from "next/server";
+import { notFound } from "next/navigation";
 import { getProducts, getCategoryBySlug } from "@/lib/api";
 import SortingProducts from "../../components/SortingProducts";
-import { notFound } from "next/navigation";
+
+const getCachedCategory = cache(async (slug) => {
+  return getCategoryBySlug(slug);
+});
+
+const getCachedProducts = cache(async (slug) => {
+  return getProducts(slug);
+});
 
 export async function generateMetadata({ params }) {
   const { categoryId } = await params;
-  const category = await getCategoryBySlug(categoryId);
+  const category = await getCachedCategory(categoryId);
+
   return {
     title: category
       ? `${category.nameBn} — আজকের দাম ও পরিবর্তন`
@@ -13,18 +24,22 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProductsPage({ params }) {
+  // Use request-time rendering for uncached API data.
+  await connection();
+
   const { categoryId } = await params;
-  const category = await getCategoryBySlug(categoryId);
-  console.log(categoryId, category);
+
+  const category = await getCachedCategory(categoryId);
+
   if (!category) {
     notFound();
   }
 
-  const products = await getProducts(categoryId);
+  const products = await getCachedProducts(categoryId);
 
   return (
-    <main className="bg-[#e8f5e9]">
-      <div className="mx-auto max-w-7xl px-4 lg:px-0 py-8">
+    <main className="min-h-screen bg-[#e8f5e9]">
+      <div className="mx-auto max-w-7xl px-4 py-8 lg:px-0">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-gray-500">
           <span>হোম</span> /{" "}
