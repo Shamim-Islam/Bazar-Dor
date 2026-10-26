@@ -10,6 +10,17 @@ export default function ProfilePage() {
 
   const handleSignOut = useSignOut();
 
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newUserData = Object.fromEntries(formData.entries());
+    
+    await authClient.updateUser({
+      ...newUserData
+    })
+    
+  };
+
   // Skeleton loading
   if (isPending) {
     return (
@@ -96,26 +107,28 @@ export default function ProfilePage() {
         <section className="rounded-xl border border-gray-200 bg-white/80 p-5 sm:p-6">
           <h2 className="mb-6 font-bold">তথ্য</h2>
 
-          <div>
-            <label htmlFor="name" className="mb-2 block text-sm font-medium">
-              নাম
-            </label>
+          <form onSubmit={handleUpdateUser}>
+            <div>
+              <label htmlFor="name" className="mb-2 block text-sm font-medium">
+                নাম
+              </label>
 
-            <input
-              id="name"
-              name="name"
-              type="text"
-              defaultValue={user?.name || ""}
-              className="w-full rounded-lg border border-gray-200 bg-transparent px-3 py-2.5 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
-            />
-          </div>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                defaultValue={user?.name || ""}
+                className="w-full rounded-lg border border-gray-200 bg-transparent px-3 py-2.5 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              />
+            </div>
 
-          <button
-            type="button"
-            className="mt-4 w-full rounded-lg bg-green-700 py-3 text-sm font-semibold text-white transition hover:bg-green-800"
-          >
-            আপডেট
-          </button>
+            <button
+              type="submit"
+              className="mt-4 w-full rounded-lg bg-green-700 py-3 text-sm font-semibold text-white transition hover:bg-green-800"
+            >
+              আপডেট
+            </button>
+          </form>
         </section>
       </div>
     </main>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -13,7 +12,7 @@ export function useSignOut() {
       await authClient.signOut({
         fetchOptions: {
           onSuccess: () => {
-            toast.success("সাইন আউট সফল !");
+            toast.success("সাইন আউট সফল হয়েছে!");
             router.push("/signin");
             router.refresh();
           },

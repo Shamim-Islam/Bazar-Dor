@@ -124,9 +124,16 @@ function SignInForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-[#07883e] py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#067532] focus:outline-none focus:ring-2 focus:ring-[#07883e] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-lg bg-[#07883e] py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#067532] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {loading ? "সাইন ইন হচ্ছে..." : "সাইন ইন করুন"}
+              {loading ? (
+                <span className="inline-flex items-center justify-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                  সাইন ইন হচ্ছে...
+                </span>
+              ) : (
+                "সাইন ইন করুন"
+              )}
             </button>
           </form>
 
