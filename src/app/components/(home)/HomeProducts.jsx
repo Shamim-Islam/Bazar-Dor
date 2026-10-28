@@ -3,6 +3,7 @@ import DecreaseProducts from "./DecreaseProducts";
 import AllProducts from "./AllProducts";
 import { getProducts } from "@/lib/api";
 
+
 const HomeProducts = async () => {
   const products = await getProducts();
   console.log(products);

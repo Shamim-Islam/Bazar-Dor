@@ -19,7 +19,22 @@ const UserInfo = () => {
   const router = useRouter();
 
   if (isPending) {
-    return <div className="h-10 w-28 animate-pulse rounded-lg bg-gray-200" />;
+    return (
+      <div
+        className="flex h-10 items-center gap-2.5 rounded-lg px-2.5 py-2"
+        aria-label="ব্যবহারকারীর তথ্য লোড হচ্ছে"
+        role="status"
+      >
+        {/* Avatar skeleton */}
+        <div className="h-9 w-9 shrink-0 animate-pulse rounded-lg bg-[#e1e9e1]" />
+
+        {/* Username skeleton */}
+        <div className="h-3.5 w-20 max-w-28 animate-pulse rounded-md bg-[#e1e9e1]" />
+
+        {/* Dropdown arrow skeleton */}
+        <div className="h-4 w-4 shrink-0 animate-pulse rounded bg-[#e1e9e1]" />
+      </div>
+    );
   }
 
   return (

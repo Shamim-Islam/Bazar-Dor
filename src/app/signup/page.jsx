@@ -21,20 +21,19 @@ const SignUpPage = () => {
 
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
-    console.log(user);
-    const name = user.name;
-    const email = user.email;
     const password = user.password;
     const confirmPassword = user.confirmPassword;
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
+
     const { data, error } = await authClient.signUp.email({
       ...user,
       callbackURL: "/",
     });
-    console.log(data, error);
+
     if (data) {
       toast.success("রেজিস্ট্রেশন সফল!" || "Account created successfully");
       redirect("/");
@@ -42,7 +41,10 @@ const SignUpPage = () => {
     if (error) {
       toast.error(error.message || "রেজিস্ট্রেশন ব্যর্থ!");
     }
+
+    
   };
+
   return (
     <main className="min-h-172.5 bg-[#eff5ef] px-4 py-10">
       <div className="mx-auto max-w-md">

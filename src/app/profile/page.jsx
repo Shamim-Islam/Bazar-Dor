@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useSignOut } from "@/hooks/useSignOut";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
+  const router = useRouter();
 
   const handleSignOut = useSignOut();
 
@@ -14,11 +17,16 @@ export default function ProfilePage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newUserData = Object.fromEntries(formData.entries());
-    
-    await authClient.updateUser({
-      ...newUserData
-    })
-    
+
+    const { data, error } = await authClient.updateUser({
+      ...newUserData,
+    });
+    if (error) {
+      toast.error("প্রোফাইল আপডেট ব্যর্থ হয়েছে!");
+    } else {
+      toast.success("প্রোফাইল আপডেট হয়েছে! 🎉");
+      router.push("/profile");
+    }
   };
 
   // Skeleton loading

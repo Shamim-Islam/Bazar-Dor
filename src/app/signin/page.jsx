@@ -35,30 +35,21 @@ function SignInForm() {
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries());
 
-    try {
-      setLoading(true);
+    const { data, error } = await authClient.signIn.email({
+      email: user.email,
+      password: user.password,
+      callbackURL: callbackUrl,
+    });
 
-      const { data, error } = await authClient.signIn.email({
-        email: user.email,
-        password: user.password,
-        callbackURL: callbackUrl,
-      });
+    if (error) {
+      toast.error(error.message || "সাইন ইন ব্যর্থ হয়েছে!");
+      return;
+    }
 
-      if (error) {
-        toast.error(error.message || "সাইন ইন ব্যর্থ হয়েছে!");
-        return;
-      }
-
-      if (data) {
-        toast.success("সাইন ইন সফল হয়েছে!");
-        router.push(callbackUrl);
-        router.refresh();
-      }
-    } catch (error) {
-      console.error("Sign in failed:", error);
-      toast.error("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-    } finally {
-      setLoading(false);
+    if (data) {
+      toast.success("সাইন ইন সফল হয়েছে!");
+      router.push(callbackUrl);
+      router.refresh();
     }
   };
 
