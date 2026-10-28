@@ -6,7 +6,6 @@ import { getProducts } from "@/lib/api";
 
 const HomeProducts = async () => {
   const products = await getProducts();
-  console.log(products);
 
   if (!products || products.length === 0) {
     return <div className="px-4 text-sm text-gray-500">কোনো ডেটা নেই</div>;
